@@ -4,7 +4,7 @@ class Tree
 {
     constructor(array)
     {
-        this.array = array;
+        this.array = array.sort((a, b) => a - b);
         this.root = this.#buildTree(this.array);
     }
 
@@ -62,7 +62,7 @@ class Tree
             }
         }
         // else return false
-       return helper(value)
+       return helper(root)
     }
 
     insert(value)
@@ -111,12 +111,66 @@ class Tree
 
     deleteItem(value)
     {
+        if (this.root == null){
+            // if  rooot is already null then value doesnt exists so do nothing
+            return 
+        }
+
         // remove the value from binary tree
         // if value doesnt exists then do nothing
+        function helper(root)
+        {
+            
+
+            if (root.data == value)
+            {
+                if (root.left == null && root.right==null)
+                    {
+                        // now the root is leaf node so desolve the node 
+                        root = null
+                        return
+                    }
+                let change_root 
+
+                if (root.left != null)
+                {
+                    change_root = root.left
+                }
+
+                else if (root.right != null)
+                {
+                    change_root = root.right 
+                }
+
+                // exchange the data 
+                let exchange = root.data 
+                root.data = change_root.data 
+                change_root.data = exchange
+
+                // pass the root that has been changed
+                helper(change_root)
+
+            }
+            
+            else
+            {
+                // if we havent reached the node with value then reach there first
+                if (value < root.data)
+                {
+                    helper(root.left)
+                }
+                else{
+                    helper(root.right)
+                }
+            }
+        }
+
+        helper(this.root)
+
     }
 
     levelOrderForEach(callback)
-    {
+    { 
         // if no call back function is proviede throw error
 
         // traverse in bfs and call the callback in each value as it traverse
