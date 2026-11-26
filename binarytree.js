@@ -39,13 +39,37 @@ class Tree
     includes(value)
     {
         // return true if the value is already in the tree 
+        let root = this.root
+        function helper(root)
+        {
+                // Value not found
+            if (root === null) {
+                return false;
+            }
+
+            if (root.data == value)
+            {
+                return true
+            }
+
+            if (value > root.data)
+            {
+                return helper(root.right)
+            }
+            else
+            {
+                return helper(root.left)
+            }
+        }
         // else return false
+       return helper(value)
     }
 
     insert(value)
     {
         // do nothing if the value is already included
         // else insert the value in binary tree by preserving binary search property.
+        
     }
 
     deleteItem(value)
