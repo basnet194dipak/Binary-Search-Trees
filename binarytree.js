@@ -67,9 +67,46 @@ class Tree
 
     insert(value)
     {
+         // If the tree is empty
+        if (this.root == null)
+        {
+            this.root = new Node(value);
+            return;
+        }
+
         // do nothing if the value is already included
         // else insert the value in binary tree by preserving binary search property.
-        
+        function helper(root)
+        {
+            if (value < root.data)
+            {
+                if (root.left == null)
+                {
+                    root.left = new Node(value)
+                }
+
+                else{
+                    // traverse to left 
+                    helper(root.left)
+                }
+                
+            }
+            else if (value > root.data)
+            {
+                // if leaf node reached insert the value
+                if (root.right == null)
+                {
+                    root.right = new Node(value)
+                }
+
+                else{
+                     // traverse to right 
+                    helper(root.right)
+                }
+               
+            }
+        }
+        helper(this.root)
     }
 
     deleteItem(value)
