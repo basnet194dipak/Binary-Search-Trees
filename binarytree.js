@@ -10,7 +10,10 @@ class Tree
 
     #buildTree(array)
     {
-
+        // turn into a balanced binary tree 
+        // sort and remove duplicates
+        // return level zero root nodes
+        // call it for initializing the value of root node
     }
 
     includes(value)
@@ -59,8 +62,34 @@ class Tree
 
     height(value)
     {
-        // return heigh of node for given value
+        // return height of node for given value
         // height: longest path from this node to leaf node
+        if (value == null)
+        {
+            return 0
+        }
+
+        if (value.left == null)
+        {
+            return 1
+        }
+
+        if (value.right == null)
+        {
+            return 1
+        }
+        
+        left_height = 1 + this.height(value.left)
+        right_height = 1 + this.height(value.right)
+
+        if (left_height > right_height)
+        {
+            return left_height
+        }
+
+        else{
+            return right_height
+        }
     }
 
     depth(value)
@@ -71,7 +100,7 @@ class Tree
     isBalanced()
     {
         // the height diff between left subtree and right subtree is no more than 1
-        // and both subtree and balanced 
+        // and both subtree are balanced 
         // check balance condition for every node
     }
 
@@ -79,6 +108,5 @@ class Tree
     {
         // rebalance the unbalanced tree
     }
-
 
 }
