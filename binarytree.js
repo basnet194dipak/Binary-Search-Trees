@@ -1,4 +1,4 @@
-import { Node } from "./node";
+import { Node } from "./node.js";
 
 class Tree
 {
@@ -10,9 +10,29 @@ class Tree
 
     #buildTree(array)
     {
-        // turn into a balanced binary tree 
+        
         // sort and remove duplicates
+        array.sort((a, b) => a - b)
+        let unique = [...new Set(array)] 
+        // turn into a balanced binary tree 
+        // helper function 
+        function helper(unique){
+
+            if (unique.length === 0) {
+                return null;
+            }
+
+            // get the midpoint and assign it to root
+            let midpoint = Math.floor(unique.length/2)
+            let root = new Node(unique[midpoint])
+            root.left = helper(unique.slice(0, midpoint))
+            root.right = helper(unique.slice(midpoint+1))
+
+            return root
+        }
         // return level zero root nodes
+
+        return helper(unique)
         // call it for initializing the value of root node
     }
 
@@ -78,7 +98,7 @@ class Tree
         {
             return 1
         }
-        
+
         left_height = 1 + this.height(value.left)
         right_height = 1 + this.height(value.right)
 
@@ -110,3 +130,5 @@ class Tree
     }
 
 }
+
+export {Tree}
