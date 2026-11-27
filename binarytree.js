@@ -347,7 +347,30 @@ class Tree
         // the height diff between left subtree and right subtree is no more than 1
         // and both subtree are balanced 
         // check balance condition for every node.
-        
+
+
+        function helper(root)
+        {
+             if (root == null)
+            {
+                return true
+            }
+
+            left_height = this.height(root.left)
+            right_height = this.height(root.right)
+
+            
+            if (Math.abs(left_height - right_height) > 1)
+            {
+                return false
+            }
+
+            return helper.call(this, root.left) &&
+               helper.call(this, root.right);
+        }
+
+        return helper(this.root)
+
     }
 
     rebalance()
