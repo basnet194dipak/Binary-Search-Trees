@@ -116,56 +116,30 @@ class Tree
             return 
         }
 
-        // remove the value from binary tree
-        // if value doesnt exists then do nothing
-        function helper(root)
+         let queue = [this.root]
+         let array = []
+
+        // traverse in bfs and call the callback in each value as it traverse
+        while (queue.length > 0)
         {
-            
-
-            if (root.data == value)
+            let root = queue.shift()
+            // callback(root.data)
+            if (root.data != value)
             {
-                if (root.left == null && root.right==null)
-                    {
-                        // now the root is leaf node so desolve the node 
-                        root = null
-                        return
-                    }
-                let change_root 
-
-                if (root.left != null)
-                {
-                    change_root = root.left
-                }
-
-                else if (root.right != null)
-                {
-                    change_root = root.right 
-                }
-
-                // exchange the data 
-                let exchange = root.data 
-                root.data = change_root.data 
-                change_root.data = exchange
-
-                // pass the root that has been changed
-                helper(change_root)
-
+                array.push(root.data)
             }
-            
-            else
+            if (root.left != null)
             {
-                // if we havent reached the node with value then reach there first
-                if (value < root.data)
-                {
-                    helper(root.left)
-                }
-                else{
-                    helper(root.right)
-                }
+                queue.push(root.left)
+            }
+
+            if (root.right != null)
+            {
+                queue.push(root.right)
             }
         }
 
-        helper(this.root)
+        this.root = this.#buildTree(array);
 
     }
 
@@ -287,18 +261,8 @@ class Tree
             return 0
         }
 
-        if (value.left == null)
-        {
-            return 1
-        }
-
-        if (value.right == null)
-        {
-            return 1
-        }
-
-        left_height = 1 + this.height(value.left)
-        right_height = 1 + this.height(value.right)
+        let left_height = 1 + this.height(value.left)
+        let right_height = 1 + this.height(value.right)
 
         if (left_height > right_height)
         {
@@ -369,13 +333,30 @@ class Tree
                helper.call(this, root.right);
         }
 
-        return helper(this.root)
+        return helper.call(this, this.root)
 
     }
 
     rebalance()
     {
         // rebalance the unbalanced tree
+        let array = []
+        function helper(root)
+        {
+            if (root==null)
+            {
+                return 
+            }
+
+            helper(root.left)
+            array.push(root.data)
+            helper(root.right)
+        }
+        helper(this.root)
+
+        // now build a balanced tree
+
+       this.root =  this.#buildTree(array)
     }
 
 }
