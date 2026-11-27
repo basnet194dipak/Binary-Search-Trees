@@ -171,28 +171,86 @@ class Tree
 
     levelOrderForEach(callback)
     { 
+        if (typeof callback !== "function") {
+            throw new Error("Callback must be a function");
+        }
+
+        if (this.root == null)
+        {
+            return 
+        }
         // if no call back function is proviede throw error
+        let queue = [this.root]
 
         // traverse in bfs and call the callback in each value as it traverse
-        // pass each value but not the node as arguments
+        while (queue.length > 0)
+        {
+            let root = queue.shift()
+            callback(root.data)
+            if (root.left != null)
+            {
+                queue.push(root.left)
+            }
 
+            if (root.right != null)
+            {
+                queue.push(root.right)
+            }
+        }
+        // pass each value but not the node as arguments
 
     }
 
     inOrderForEach(callback)
     {
+        function helper(root)
+        {
+            if (root === null)
+            {
+                return
+            }
 
+            helper(root.left)
+            callback(root.data)
+            helper(root.right)
+        }
+        helper(this.root)
     }
 
     preOrderForEach(callback)
     {
 
+        function helper(root)
+        {
+            if (root === null)
+            {
+                return 
+            }
+
+            callback(root.data)
+            helper(root.left)
+            helper(root.right)
+        }
+
+        helper(this.root)
 
     }
 
     postOrderFOrEach(callback)
     {
+         function helper(root)
+        {
+            if (root === null)
+            {
+                return 
+            }
+            
+            helper(root.left)
+            helper(root.right)
+            callback(root.data)
+        }
 
+        helper(this.root)
     }
 
     height(value)
