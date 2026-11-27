@@ -1,16 +1,49 @@
 import { Tree } from "./binarytree.js";
-let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
-let binary = new Tree(array)
 
-console.log(binary.array)
-console.log(binary.root.data)
-console.log("23",binary.includes(23))
-console.log(binary.includes(23000))
+function randomNumbers(count = 20, maximum = 100) {
+    return Array.from(
+        { length: count },
+        () => Math.floor(Math.random() * maximum)
+    );
+}
 
-binary.deleteItem(23)
-console.log("23",binary.includes(23))
+function printTraversal(name, tree) {
+    const values = [];
 
-console.log("9",binary.includes(9))
-binary.deleteItem(9)
-console.log("9",binary.includes(9))
-// console.log(binary.levelOrderForEach())
+    if (name === "level") {
+        tree.levelOrderForEach((value) => values.push(value));
+    } else if (name === "pre") {
+        tree.preOrderForEach((value) => values.push(value));
+    } else if (name === "post") {
+        tree.postOrderForEach((value) => values.push(value));
+    } else {
+        tree.inOrderForEach((value) => values.push(value));
+    }
+
+    console.log(`${name.toUpperCase()} order: ${values.join(", ")}`);
+}
+
+function printTraversals(tree) {
+    printTraversal("level", tree);
+    printTraversal("pre", tree);
+    printTraversal("post", tree);
+    printTraversal("in", tree);
+}
+
+const tree = new Tree(randomNumbers());
+
+console.log("Initial array:", tree.array);
+console.log("Is balanced:", tree.isBalanced());
+printTraversals(tree);
+
+tree.insert(101);
+tree.insert(125);
+tree.insert(150);
+tree.insert(175);
+
+console.log("\nIs balanced after inserts:", tree.isBalanced());
+
+tree.rebalance();
+
+console.log("Is balanced after rebalance:", tree.isBalanced());
+printTraversals(tree);
