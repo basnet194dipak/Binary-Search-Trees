@@ -226,7 +226,7 @@ class Tree
 
     }
 
-    postOrderFOrEach(callback)
+    postOrderForEach(callback)
     {
         if (typeof callback !== "function") {
             throw new Error("Callback must be a function");
@@ -258,20 +258,13 @@ class Tree
         // height: longest path from this node to leaf node
         if (value == null)
         {
-            return 0
+            return -1
         }
 
-        let left_height = 1 + this.height(value.left)
-        let right_height = 1 + this.height(value.right)
+        let left_height = this.height(value.left)
+        let right_height = this.height(value.right)
 
-        if (left_height > right_height)
-        {
-            return left_height
-        }
-
-        else{
-            return right_height
-        }
+        return 1 + Math.max(left_height, right_height);
     }
 
     depth(value)
@@ -320,8 +313,8 @@ class Tree
                 return true
             }
 
-            left_height = this.height(root.left)
-            right_height = this.height(root.right)
+            let left_height = this.height(root.left)
+            let right_height = this.height(root.right)
 
             
             if (Math.abs(left_height - right_height) > 1)
@@ -355,7 +348,6 @@ class Tree
         helper(this.root)
 
         // now build a balanced tree
-
        this.root =  this.#buildTree(array)
     }
 
