@@ -203,6 +203,15 @@ class Tree
 
     inOrderForEach(callback)
     {
+        if (typeof callback !== "function") {
+            throw new Error("Callback must be a function");
+        }
+
+        if (this.root == null)
+        {
+            return 
+        }
+
         function helper(root)
         {
             if (root === null)
@@ -219,7 +228,14 @@ class Tree
 
     preOrderForEach(callback)
     {
+        if (typeof callback !== "function") {
+            throw new Error("Callback must be a function");
+        }
 
+        if (this.root == null)
+        {
+            return 
+        }
         function helper(root)
         {
             if (root === null)
@@ -238,7 +254,16 @@ class Tree
 
     postOrderFOrEach(callback)
     {
-         function helper(root)
+        if (typeof callback !== "function") {
+            throw new Error("Callback must be a function");
+        }
+
+        if (this.root == null)
+        {
+            return 
+        }
+
+        function helper(root)
         {
             if (root === null)
             {
@@ -288,13 +313,41 @@ class Tree
     depth(value)
     {
         // depth is number of edges from this node to root node
+        if (this.includes(value))
+        {
+            let depth = 0
+            function helper(root)
+            {
+                if (root.data == value)
+                {
+                    return depth
+                }
+                else
+                {
+                    depth++
+                }
+                if (value< root.data)
+                {
+                    return helper(root.left)
+                }
+                else{
+                    return helper(root.right)
+                }
+            }
+            return helper(this.root)
+
+        }
+        else{
+            console.log("Value doesnt exists to find the depth")
+        }
     }
 
     isBalanced()
     {
         // the height diff between left subtree and right subtree is no more than 1
         // and both subtree are balanced 
-        // check balance condition for every node
+        // check balance condition for every node.
+        
     }
 
     rebalance()
